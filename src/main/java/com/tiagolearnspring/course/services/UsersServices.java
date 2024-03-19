@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.tiagolearnspring.course.entities.User;
 import com.tiagolearnspring.course.repositories.UserRepository;
+import com.tiagolearnspring.course.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class UsersServices {
@@ -20,7 +21,8 @@ public class UsersServices {
 	}
 
 	public User findById(Long id) {
-		return repository.findById(id).get();
+		Optional<User> obj = repository.findById(id);
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 
 	public User insert(User obj) {
