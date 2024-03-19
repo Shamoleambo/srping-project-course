@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import com.tiagolearnspring.course.entities.Category;
 import com.tiagolearnspring.course.entities.Order;
 import com.tiagolearnspring.course.entities.OrderItem;
+import com.tiagolearnspring.course.entities.Payment;
 import com.tiagolearnspring.course.entities.Product;
 import com.tiagolearnspring.course.entities.User;
 import com.tiagolearnspring.course.entities.enums.OrderStatus;
@@ -79,6 +80,11 @@ public class TestConfig implements CommandLineRunner {
 		orderRepository.saveAll(Arrays.asList(o1, o2, o3));
 
 		orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
+
+		Payment pay1 = new Payment(null, Instant.parse("2023-03-18T10:11:54Z"), o2);
+		o2.setPayment(pay1);
+		
+		orderRepository.save(o2);
 
 	}
 }
