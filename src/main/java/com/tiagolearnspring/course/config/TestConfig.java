@@ -10,10 +10,12 @@ import org.springframework.context.annotation.Profile;
 
 import com.tiagolearnspring.course.entities.Category;
 import com.tiagolearnspring.course.entities.Order;
+import com.tiagolearnspring.course.entities.OrderItem;
 import com.tiagolearnspring.course.entities.Product;
 import com.tiagolearnspring.course.entities.User;
 import com.tiagolearnspring.course.entities.enums.OrderStatus;
 import com.tiagolearnspring.course.repositories.CategoryRepository;
+import com.tiagolearnspring.course.repositories.OrderItemRepository;
 import com.tiagolearnspring.course.repositories.OrderRepository;
 import com.tiagolearnspring.course.repositories.ProductsRepository;
 import com.tiagolearnspring.course.repositories.UserRepository;
@@ -33,6 +35,9 @@ public class TestConfig implements CommandLineRunner {
 
 	@Autowired
 	private ProductsRepository productRepository;
+
+	@Autowired
+	private OrderItemRepository orderItemRepository;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -65,8 +70,15 @@ public class TestConfig implements CommandLineRunner {
 		Order o2 = new Order(null, Instant.parse("2023-03-18T08:11:54Z"), OrderStatus.PAID, u2);
 		Order o3 = new Order(null, Instant.now(), OrderStatus.WAITING_PAYMENT, u1);
 
+		OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice());
+		OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice());
+		OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
+		OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
+
 		userRepository.saveAll(Arrays.asList(u1, u2));
 		orderRepository.saveAll(Arrays.asList(o1, o2, o3));
+
+		orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
 
 	}
 }
